@@ -1,0 +1,139 @@
+          You have an array Arr of N numbers ranging from 0 to 99. Also you have Q queries [L, R]. For each such query you must print
+          V([L, R]) = ∑i=0..99 count(i)2 * i
+          where count(i) is the number of times i occurs in Arr[L..R].
+          
+          
+Constraints are N ≤ 105, Q ≤ 105.
+To apply Mo’s algorithm, you must ensure of three properties:
+
+         1. Arr is not modified by queries;
+         2. Queries are known beforehand;
+         3. If you know V([L, R]), then you can compute V([L + 1, R]), V([L - 1, R]), V([L, R - 1]) and V([L, R + 1]), each in O(F) time.
+         
+         
+First two properties obviously hold. The third property depends on the time bound — O(F).
+Surely, we can compute V([L + 1, R]) from scratch in Ω(R - L) = Ω(N) in the worst case. But looking at complexity of Mo’s algorithm, you can deduce that this will surely time out, because we multiply O(F) with O((Q + N) * sqrt(N)).
+Typically, you want O(F) to be O(1) or O(log(n)). Choosing a way to achieve appropriate time bound O(F) is programmer’s main concern when solving problems using Mo’s algorithm.
+
+I will describe a way to achieve O(F) = O(1) for this problem.
+Let’s maintain variable current_answer (initialized by zero) to store V([mo_left, mo_right]) and integer array cnt of size 100, where cnt[x] will be the number of times x occurs in [mo_left, mo_right].
+From the definition of current_answer we can see that
+   current answer = V([mo_left, mo_right]) =∑i=0..99 count'(i)2 * i
+where count’(x) is the number of times x occurs in [mo_left, mo_right].
+By the definition of cnt we see that count’(x) = cnt[x], so
+   current answer = ∑i=0..99 cnt[i]2 * i.
+
+Suppose we want to change mo_right to mo_right + 1. It means we want to add number p = Arr[mo_right + 1] into consideration. But we also want to retain current_answer and cnt’s properties.
+Maintaining cnt is easy: just increase cnt[p] by 1. It is a bit trickier to deal with current_answer.
+We know (from the definitions) that current_answer contains summand cnt[p]2 * p before addition. Let’s subtract this value from the answer. Then, after we perform addition to cnt, add again cnt[p]2 * p to the answer (make no mistake: this time it will contain updated value of cnt[p]). Both updates take O(1) time.
+All other transitions (mo_left to mo_left + 1, mo_left to mo_left - 1 and mo_right to mo_right - 1) can be done in the same way, so we have O(F) = O(1). You can refer to the code below for clarity.
+
+Now let’s look into detail on one sample test case:
+Input:
+Arr = [0, 1, 1, 0, 2, 3, 4, 1, 3, 5, 1, 5, 3, 5, 4, 0, 2, 2] of 18 elements
+Queries (0-indexed): [0, 8], [2, 5], [2, 11], [16, 17], [13, 14], [1, 17], [17, 17]
+
+The algorithm works as follows:
+Firstly, set BLOCK_SIZE = sqrt(18) = 4. Notice that we have 5 blocks: [0, 3], [4, 7], [8, 11], [12, 15], [16, 17]. The last block contains less than BLOCK_SIZE elements.
+Then, set mo_left = 0, mo_right = -1, current_answer = 0, cnt = [0, 0, 0, 0, 0, 0] (I will use only first 6 elements out of 100 for the sake of simplicity).
+
+Then sort queries. The Mo’s order will be:
+[2,5], [0, 8], [2, 11], [1, 17] (here ends Q0) [13, 14] (here ends Q3) [16, 17], [17, 17] (here ends Q4).
+
+Now, when everything is set up, we can answer queries:
+
+
+
+            1.  We need to process query [2, 5]. Currently, our segment is [0, -1]. So we need to move mo_right to 5 and mo_left to 2.
+                Let’s move mo_right first:
+                mo_right = 0, current_answer = 0, cnt = [1, 0, 0, 0, 0, 0]
+                mo_right = 1, current_answer = 1, cnt = [1, 1, 0, 0, 0, 0]
+                mo_right = 2, current_answer = 4, cnt = [1, 2, 0, 0, 0, 0]
+                mo_right = 3, current_answer = 4, cnt = [2, 2, 0, 0, 0, 0]
+                mo_right = 4, current_answer = 6, cnt = [2, 2, 1, 0, 0, 0]
+                mo_right = 5, current_answer = 9, cnt = [2, 2, 1, 1, 0, 0]
+                Now we must move mo_left:
+                mo_left = 1, current_answer = 9, cnt = [1, 2, 1, 1, 0, 0]
+                mo_left = 2, current_answer = 6, cnt = [1, 1, 1, 1, 0, 0]
+                Thus, the answer for query [2, 5] is 6.
+                
+                
+              2. Our next query is [0, 8]. Current segment [mo_left, mo_right] is [2, 5]. We need to move mo_right to 8 and mo_left to 0.
+                 Again, let’s move mo_right first:
+                 mo_right = 6, current_answer = 10, cnt = [1, 1, 1, 1, 1, 0]
+                 mo_right = 7, current_answer = 13, cnt = [1, 2, 1, 1, 1, 0]
+                 mo_right = 8, current_answer = 22, cnt = [1, 2, 1, 2, 1, 0]
+                 Then we move mo_left:
+                 mo_left = 1, current_answer = 27, cnt = [1, 3, 1, 2, 1, 0]
+                 mo_left = 0, current_answer = 27, cnt = [2, 3, 1, 2, 1, 0]
+                 So, the answer for query [0, 8] is 27.
+                 
+                 
+              3. Next query is [2, 11]. Current segment is [0, 8]. We need to move mo_right to 11 and mo_left to 2.
+                 mo_right = 9, current_answer = 32, cnt = [2, 3, 1, 2, 1, 1]
+                 mo_right = 10, current_answer = 39, cnt = [2, 4, 1, 2, 1, 1]
+                 mo_right = 11, current_answer = 54, cnt = [2, 4, 1, 2, 1, 2]
+                 mo_left = 1, current_answer = 54, cnt = [1, 4, 1, 2, 1, 2]
+                 mo_left = 2, current_answer = 47, cnt = [1, 3, 1, 2, 1, 2]
+                 Answer for query [2, 11] is 47.
+                 
+                 
+              4. Next query is [1, 17]. Current segment is [2, 11]. We need to move mo_right to 17 and mo_left to 1.
+                 mo_right = 12, current_answer = 62, cnt = [1, 3, 1, 3, 1, 2]
+                 mo_right = 13, current_answer = 87, cnt = [1, 3, 1, 3, 1, 3]
+                 mo_right = 14, current_answer = 99, cnt = [1, 3, 1, 3, 2, 3]
+                 mo_right = 15, current_answer = 99, cnt = [2, 3, 1, 3, 2, 3]
+                 mo_right = 16, current_answer = 105, cnt = [2, 3, 2, 3, 2, 3]
+                 mo_right = 17, current_answer = 115, cnt = [2, 3, 3, 3, 2, 3]
+                 mo_left = 1, current_answer = 122, cnt = [2, 4, 3, 3, 2, 3]
+                 Answer for query [1, 17] is 122.
+                 
+                 
+              5. Our next goal is query [13, 14]. Notice that it starts in different block from the previous query [1, 17]. Consequently, this is the first time mo_right will move to the left. We need to move mo_left to 13 and mo_right to 14.
+                 mo_right = 16, current_answer = 112, cnt = [2, 4, 2, 3, 2, 3]
+                 mo_right = 15, current_answer = 106, cnt = [2, 4, 1, 3, 2, 3]
+                 mo_right = 14, current_answer = 106, cnt = [1, 4, 1, 3, 2, 3]
+                 mo_left = 2, current_answer = 99, cnt = [1, 3, 1, 3, 2, 3]
+                 mo_left = 3, current_answer = 94, cnt = [1, 2, 1, 3, 2, 3]
+                 mo_left = 4, current_answer = 94, cnt = [0, 2, 1, 3, 2, 3]
+                 mo_left = 5, current_answer = 92, cnt = [0, 2, 0, 3, 2, 3]
+                 mo_left = 6, current_answer = 77, cnt = [0, 2, 0, 2, 2, 3]
+                 mo_left = 7, current_answer = 65, cnt = [0, 2, 0, 2, 1, 3]
+                 mo_left = 8, current_answer = 62, cnt = [0, 1, 0, 2, 1, 3]
+                 mo_left = 9, current_answer = 53, cnt = [0, 1, 0, 1, 1, 3]
+                 mo_left = 10, current_answer = 28, cnt = [0, 1, 0, 1, 1, 2]
+                 mo_left = 11, current_answer = 27, cnt = [0, 0, 0, 1, 1, 2]
+                 mo_left = 12, current_answer = 12, cnt = [0, 0, 0, 1, 1, 1]
+                 mo_left = 13, current_answer = 9, cnt = [0, 0, 0, 0, 1, 1]
+                 Answer for query [13,14] is 9.
+                 
+                 
+                 
+                 
+              6. Next query is [16, 17]. Notice, however, that now we do not need to move mo_right to the left. We need to move mo_left to 16 and mo_right to 17.
+                 mo_right = 15, current_answer = 9, cnt = [1, 0, 0, 0, 1, 1]
+                 mo_right = 16, current_answer = 11, cnt = [1, 0, 1, 0, 1, 1]
+                 mo_right = 17, current_answer = 17, cnt = [1, 0, 2, 0, 1, 1]
+                 mo_left = 14, current_answer = 12, cnt = [1, 0, 2, 0, 1, 0]
+                 mo_left = 15, current_answer = 8, cnt = [1, 0, 2, 0, 0, 0]
+                 mo_left = 16, current_answer = 8, cnt = [0, 0, 2, 0, 0, 0]
+                 Answer for [16, 17] is 8.
+                 
+              7. The last query is [17, 17]. It requires us to move mo_left one unit to the right.
+                 mo_left = 17, current_answer = 2, cnt = [0, 0, 1, 0, 0, 0]
+                 Answer for this query is 2.
+                 
+Now the important part comes: we must output answers not in order we’ve achieved them, but in order they were asked.
+
+Output:
+  27
+  6
+  47
+  8
+  9
+ 122
+  2
+  
+  
+                 
+   
