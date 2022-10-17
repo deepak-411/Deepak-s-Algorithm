@@ -16,7 +16,7 @@ Here we have Func([L, R]) = Arr[L] + Arr[L + 1] + ... + Arr[R].
 
 This does not sound so scary, does it? You’ve probably heard of solutions to this problem using Segment Trees or Binary Indexed Trees, or even prefix sums.
 
-Mo’s algorithm provides a way to answer all queries in O((N + Q) * sqrt(N) * F) time with at least O(Q) additional memory. Meaning of F is explained below.
+Deepak's algorithm provides a way to answer all queries in O((N + Q) * sqrt(N) * F) time with at least O(Q) additional memory. Meaning of F is explained below.
 
 The algorithm is applicable if all following conditions are met:
 
