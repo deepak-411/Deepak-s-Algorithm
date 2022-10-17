@@ -46,81 +46,81 @@ Now, when everything is set up, we can answer queries:
 
             1.  We need to process query [2, 5]. Currently, our segment is [0, -1]. So we need to move mo_right to 5 and mo_left to 2.
                 Let’s move mo_right first:
-                mo_right = 0, current_answer = 0, cnt = [1, 0, 0, 0, 0, 0]
-                mo_right = 1, current_answer = 1, cnt = [1, 1, 0, 0, 0, 0]
-                mo_right = 2, current_answer = 4, cnt = [1, 2, 0, 0, 0, 0]
-                mo_right = 3, current_answer = 4, cnt = [2, 2, 0, 0, 0, 0]
-                mo_right = 4, current_answer = 6, cnt = [2, 2, 1, 0, 0, 0]
-                mo_right = 5, current_answer = 9, cnt = [2, 2, 1, 1, 0, 0]
+                deepak_right = 0, current_answer = 0, cnt = [1, 0, 0, 0, 0, 0]
+                deepak_right = 1, current_answer = 1, cnt = [1, 1, 0, 0, 0, 0]
+                deepak_right = 2, current_answer = 4, cnt = [1, 2, 0, 0, 0, 0]
+                deepak_right = 3, current_answer = 4, cnt = [2, 2, 0, 0, 0, 0]
+                deepak_right = 4, current_answer = 6, cnt = [2, 2, 1, 0, 0, 0]
+                deepak_right = 5, current_answer = 9, cnt = [2, 2, 1, 1, 0, 0]
                 Now we must move mo_left:
-                mo_left = 1, current_answer = 9, cnt = [1, 2, 1, 1, 0, 0]
-                mo_left = 2, current_answer = 6, cnt = [1, 1, 1, 1, 0, 0]
+                deepak_left = 1, current_answer = 9, cnt = [1, 2, 1, 1, 0, 0]
+                deepak_left = 2, current_answer = 6, cnt = [1, 1, 1, 1, 0, 0]
                 Thus, the answer for query [2, 5] is 6.
                 
                 
               2. Our next query is [0, 8]. Current segment [mo_left, mo_right] is [2, 5]. We need to move mo_right to 8 and mo_left to 0.
                  Again, let’s move mo_right first:
-                 mo_right = 6, current_answer = 10, cnt = [1, 1, 1, 1, 1, 0]
-                 mo_right = 7, current_answer = 13, cnt = [1, 2, 1, 1, 1, 0]
-                 mo_right = 8, current_answer = 22, cnt = [1, 2, 1, 2, 1, 0]
+                 deepak_right = 6, current_answer = 10, cnt = [1, 1, 1, 1, 1, 0]
+                 deepak_right = 7, current_answer = 13, cnt = [1, 2, 1, 1, 1, 0]
+                 deepak_right = 8, current_answer = 22, cnt = [1, 2, 1, 2, 1, 0]
                  Then we move mo_left:
-                 mo_left = 1, current_answer = 27, cnt = [1, 3, 1, 2, 1, 0]
-                 mo_left = 0, current_answer = 27, cnt = [2, 3, 1, 2, 1, 0]
+                 deepak_left = 1, current_answer = 27, cnt = [1, 3, 1, 2, 1, 0]
+                 deepak_left = 0, current_answer = 27, cnt = [2, 3, 1, 2, 1, 0]
                  So, the answer for query [0, 8] is 27.
                  
                  
               3. Next query is [2, 11]. Current segment is [0, 8]. We need to move mo_right to 11 and mo_left to 2.
-                 mo_right = 9, current_answer = 32, cnt = [2, 3, 1, 2, 1, 1]
-                 mo_right = 10, current_answer = 39, cnt = [2, 4, 1, 2, 1, 1]
-                 mo_right = 11, current_answer = 54, cnt = [2, 4, 1, 2, 1, 2]
-                 mo_left = 1, current_answer = 54, cnt = [1, 4, 1, 2, 1, 2]
-                 mo_left = 2, current_answer = 47, cnt = [1, 3, 1, 2, 1, 2]
+                 deepak_right = 9, current_answer = 32, cnt = [2, 3, 1, 2, 1, 1]
+                 deepak_right = 10, current_answer = 39, cnt = [2, 4, 1, 2, 1, 1]
+                 deepak_right = 11, current_answer = 54, cnt = [2, 4, 1, 2, 1, 2]
+                 deepak_left = 1, current_answer = 54, cnt = [1, 4, 1, 2, 1, 2]
+                 deepak_left = 2, current_answer = 47, cnt = [1, 3, 1, 2, 1, 2]
                  Answer for query [2, 11] is 47.
                  
                  
               4. Next query is [1, 17]. Current segment is [2, 11]. We need to move mo_right to 17 and mo_left to 1.
-                 mo_right = 12, current_answer = 62, cnt = [1, 3, 1, 3, 1, 2]
-                 mo_right = 13, current_answer = 87, cnt = [1, 3, 1, 3, 1, 3]
-                 mo_right = 14, current_answer = 99, cnt = [1, 3, 1, 3, 2, 3]
-                 mo_right = 15, current_answer = 99, cnt = [2, 3, 1, 3, 2, 3]
-                 mo_right = 16, current_answer = 105, cnt = [2, 3, 2, 3, 2, 3]
-                 mo_right = 17, current_answer = 115, cnt = [2, 3, 3, 3, 2, 3]
-                 mo_left = 1, current_answer = 122, cnt = [2, 4, 3, 3, 2, 3]
+                 deepak_right = 12, current_answer = 62, cnt = [1, 3, 1, 3, 1, 2]
+                 deepak_right = 13, current_answer = 87, cnt = [1, 3, 1, 3, 1, 3]
+                 deepak_right = 14, current_answer = 99, cnt = [1, 3, 1, 3, 2, 3]
+                 deepak_right = 15, current_answer = 99, cnt = [2, 3, 1, 3, 2, 3]
+                 deepak_right = 16, current_answer = 105, cnt = [2, 3, 2, 3, 2, 3]
+                 deepak_right = 17, current_answer = 115, cnt = [2, 3, 3, 3, 2, 3]
+                 deepak_left = 1, current_answer = 122, cnt = [2, 4, 3, 3, 2, 3]
                  Answer for query [1, 17] is 122.
                  
                  
               5. Our next goal is query [13, 14]. Notice that it starts in different block from the previous query [1, 17]. Consequently, this is the first time mo_right will move to the left. We need to move mo_left to 13 and mo_right to 14.
-                 mo_right = 16, current_answer = 112, cnt = [2, 4, 2, 3, 2, 3]
-                 mo_right = 15, current_answer = 106, cnt = [2, 4, 1, 3, 2, 3]
-                 mo_right = 14, current_answer = 106, cnt = [1, 4, 1, 3, 2, 3]
-                 mo_left = 2, current_answer = 99, cnt = [1, 3, 1, 3, 2, 3]
-                 mo_left = 3, current_answer = 94, cnt = [1, 2, 1, 3, 2, 3]
-                 mo_left = 4, current_answer = 94, cnt = [0, 2, 1, 3, 2, 3]
-                 mo_left = 5, current_answer = 92, cnt = [0, 2, 0, 3, 2, 3]
-                 mo_left = 6, current_answer = 77, cnt = [0, 2, 0, 2, 2, 3]
-                 mo_left = 7, current_answer = 65, cnt = [0, 2, 0, 2, 1, 3]
-                 mo_left = 8, current_answer = 62, cnt = [0, 1, 0, 2, 1, 3]
-                 mo_left = 9, current_answer = 53, cnt = [0, 1, 0, 1, 1, 3]
-                 mo_left = 10, current_answer = 28, cnt = [0, 1, 0, 1, 1, 2]
-                 mo_left = 11, current_answer = 27, cnt = [0, 0, 0, 1, 1, 2]
-                 mo_left = 12, current_answer = 12, cnt = [0, 0, 0, 1, 1, 1]
-                 mo_left = 13, current_answer = 9, cnt = [0, 0, 0, 0, 1, 1]
+                 deepak_right = 16, current_answer = 112, cnt = [2, 4, 2, 3, 2, 3]
+                 deepak_right = 15, current_answer = 106, cnt = [2, 4, 1, 3, 2, 3]
+                 deepak_right = 14, current_answer = 106, cnt = [1, 4, 1, 3, 2, 3]
+                 deepak_left = 2, current_answer = 99, cnt = [1, 3, 1, 3, 2, 3]
+                 deepak_left = 3, current_answer = 94, cnt = [1, 2, 1, 3, 2, 3]
+                 deepak_left = 4, current_answer = 94, cnt = [0, 2, 1, 3, 2, 3]
+                 deepak_left = 5, current_answer = 92, cnt = [0, 2, 0, 3, 2, 3]
+                 deepak_left = 6, current_answer = 77, cnt = [0, 2, 0, 2, 2, 3]
+                 deepak_left = 7, current_answer = 65, cnt = [0, 2, 0, 2, 1, 3]
+                 deepak_left = 8, current_answer = 62, cnt = [0, 1, 0, 2, 1, 3]
+                 deepak_left = 9, current_answer = 53, cnt = [0, 1, 0, 1, 1, 3]
+                 deepak_left = 10, current_answer = 28, cnt = [0, 1, 0, 1, 1, 2]
+                 deepak_left = 11, current_answer = 27, cnt = [0, 0, 0, 1, 1, 2]
+                 deepak_left = 12, current_answer = 12, cnt = [0, 0, 0, 1, 1, 1]
+                 deepak_left = 13, current_answer = 9, cnt = [0, 0, 0, 0, 1, 1]
                  Answer for query [13,14] is 9.
                  
                  
                  
                  
               6. Next query is [16, 17]. Notice, however, that now we do not need to move mo_right to the left. We need to move mo_left to 16 and mo_right to 17.
-                 mo_right = 15, current_answer = 9, cnt = [1, 0, 0, 0, 1, 1]
-                 mo_right = 16, current_answer = 11, cnt = [1, 0, 1, 0, 1, 1]
-                 mo_right = 17, current_answer = 17, cnt = [1, 0, 2, 0, 1, 1]
-                 mo_left = 14, current_answer = 12, cnt = [1, 0, 2, 0, 1, 0]
-                 mo_left = 15, current_answer = 8, cnt = [1, 0, 2, 0, 0, 0]
-                 mo_left = 16, current_answer = 8, cnt = [0, 0, 2, 0, 0, 0]
+                 deepak_right = 15, current_answer = 9, cnt = [1, 0, 0, 0, 1, 1]
+                 deepak_right = 16, current_answer = 11, cnt = [1, 0, 1, 0, 1, 1]
+                 deepak_right = 17, current_answer = 17, cnt = [1, 0, 2, 0, 1, 1]
+                 deepak_left = 14, current_answer = 12, cnt = [1, 0, 2, 0, 1, 0]
+                 deepak_left = 15, current_answer = 8, cnt = [1, 0, 2, 0, 0, 0]
+                 deepak_left = 16, current_answer = 8, cnt = [0, 0, 2, 0, 0, 0]
                  Answer for [16, 17] is 8.
                  
               7. The last query is [17, 17]. It requires us to move mo_left one unit to the right.
-                 mo_left = 17, current_answer = 2, cnt = [0, 0, 1, 0, 0, 0]
+                 deepak_left = 17, current_answer = 2, cnt = [0, 0, 1, 0, 0, 0]
                  Answer for this query is 2.
                  
 Now the important part comes: we must output answers not in order we’ve achieved them, but in order they were asked.
