@@ -3,13 +3,13 @@
 Introduction
 Deepak's algorithm is a generic idea. It applies to the following class of problems:
 
-      You are given array Arr of length N and Q queries. Each query is represented by two numbers L and R, and it asks you to compute some function Func with subarray Arr[L..R] as its argument.
+      You are given array Arr of length N and Q queries. Each query is represented by two numbers L and R, and it asks       you to compute some function Func with subarray Arr[L..R] as its argument.
       
       
 For the sake of brevity we will denote Func([L, R]) as the value of Func on subarray Arr[L..R].
 If this sounds too abstract, let’s look at specific example:
 
-       There is an integer array Arr of length N and Q queries. For each i, query #i asks you to output the sum of numbers on subarray [Li, Ri], i.e. Arr[Li] + Arr[Li + 1] + … + Arr[Ri].
+       There is an integer array Arr of length N and Q queries. For each i, query #i asks you to output the sum of            numbers on subarray [Li, Ri], i.e. Arr[Li] + Arr[Li + 1] + … + Arr[Ri].
        
        
 Here we have Func([L, R]) = Arr[L] + Arr[L + 1] + ... + Arr[R].
